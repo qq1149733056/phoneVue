@@ -4,29 +4,29 @@ const path = require("path");
 const date = new Date();
 const timestamp = date.getTime();
 const pages = {
-  // index: {
-  //   entry: "src/main.js",
-  //   template: "public/index.html",
-  //   filename: "index/index.html",
-  //   title: "app",
-  // },
-  // login: {
-  //   entry: "src/page/index/index.js",
-  //   template: "public/index.html",
-  //   filename: "login/login.html",
-  //   title: "login",
-  // },
-  // dup: {
-  //   entry: "src/page/dup/index.js",
-  //   template: "public/index.html",
-  //   filename: "dup/dup.html",
-  //   title: "dup",
-  // },
+  index: {
+    entry: "src/main.js",
+    template: "public/index.html",
+    filename: "index/index.html",
+    title: "app",
+  },
+  login: {
+    entry: "src/pages/login/main.js",
+    template: "public/index.html",
+    filename: "login/login.html",
+    title: "login",
+  },
+  dup: {
+    entry: "src/pages/dup/main.js",
+    template: "public/index.html",
+    filename: "dup/dup.html",
+    title: "dup",
+  },
 };
 console.log(process.argv);
 module.exports = defineConfig({
   publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
-  //pages: pages,
+  pages: pages,
   outputDir: isEnvProduction
     ? `dist/dist_${timestamp}`
     : `sit/sit_${timestamp}`,

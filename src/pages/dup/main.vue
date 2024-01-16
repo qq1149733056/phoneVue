@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h1>login</h1>
+    <h1>dup</h1>
   </div>
 </template>
 <script>
 export default {
-  name: "login",
+  name: "dup",
   methods: {},
   components: {},
 };
