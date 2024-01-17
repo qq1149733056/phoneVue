@@ -1,16 +1,14 @@
 <template>
   <div>
-    <h1>dup1</h1>
-    <div class="hd">123</div>
+    <h1>vantlogin</h1>
   </div>
 </template>
 <script>
 export default {
-  name: "dup",
+  name: "login",
   methods: {},
   components: {},
 };
 </script>
-<style scoped>
-@import "./main.less";
-</style>
+
+<style></style>

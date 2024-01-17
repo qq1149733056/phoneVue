@@ -1,31 +1,42 @@
 const { defineConfig } = require("@vue/cli-service");
+const webpack = require('webpack');
+const CompressionPlugin = require("compression-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin");
 const isEnvProduction = process.env.NODE_ENV === "production";
 const path = require("path");
 const date = new Date();
 const timestamp = date.getTime();
-const pages = {
-  index: {
-    entry: "src/main.js",
-    template: "public/index.html",
-    filename: "index/index.html",
-    title: "app",
-  },
-  login: {
-    entry: "src/pages/login/main.js",
-    template: "public/index.html",
-    filename: "login/login.html",
-    title: "login",
-  },
-  dup: {
-    entry: "src/pages/dup/main.js",
-    template: "public/index.html",
-    filename: "dup/dup.html",
-    title: "dup",
-  },
-};
-console.log(process.argv);
+const data = require("./pages.json");
+let pages = {};
+if (data.pages.length > 0) {
+} else {
+  data.pagesindex.forEach((val, index) => {
+    let temp = val.split("/");
+    pages[val] = {
+      entry: `src/${val}/main.js`,
+      template: "public/index.html",
+      filename: `${val}/${temp[temp.length - 1]}.html`,
+      title: `${temp[temp.length - 1]}`,
+    };
+  });
+}
+let cssIF = process.argv[2].includes("build");
+cssExtract = cssIF
+  ? {
+      filename: "[name]/css.[contenthash].css",
+      chunkFilename: "[name]/css.[contenthash].css",
+    }
+  : false;
+console.log(pages); //输出路径
 module.exports = defineConfig({
-  publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
+  // css: {
+  //   extract: process.argv[2].includes("build"), //判断是serve还是build 直接配置true可能导致无法热更新
+  // },
+  css: {
+    extract: cssExtract,
+  },
+  publicPath: process.argv[2].includes("serve") ? "/" : "../../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
   pages: pages,
   outputDir: isEnvProduction
     ? `dist/dist_${timestamp}`
@@ -71,10 +82,10 @@ module.exports = defineConfig({
           },
         },
       },
-      performance: {
-        hints: "warning",
-        maxAssetSize: 5242880,
-      },
+      // performance: {
+      //   hints: "warning",
+      //   maxAssetSize: 5242880,
+      // },
       resolve: {
         alias: {
           "@": path.resolve(__dirname, "src"),
@@ -84,23 +95,23 @@ module.exports = defineConfig({
       devtool: config.mode === "production" ? false : "source-map",
       output: {
         filename: (pathData) => {
+          // console.log(pathData)
           if (pathData.chunk.name.includes("vendors")) {
             return "vendors/[name].bundle.js"; // 文件名
           } else {
-            return "[name]/[name].bundle.js"; // 文件名
+            let arr = pathData.chunk.name.split("/");
+            return (
+              pathData.chunk.name + "/" + arr[arr.length - 1] + ".bundle.js"
+            ); // 文件名
           }
         },
       },
       module: {
         rules: [
           {
-            test: /\.node$/,
-            use: "node-loader",
-          },
-          {
             test: /\.less$/i,
             use: [
-              "style-loader",
+              "vue-style-loader",
               "css-loader",
               "postcss-loader",
               "less-loader",
@@ -121,6 +132,15 @@ module.exports = defineConfig({
         ],
       },
       plugins: [
+        new webpack.ProvidePlugin({
+          // 配置全局模块
+          global: 'lib-flexible/flexible'
+        }),
+        //  new CustomOutputPlugin(pages),
+        //   new MiniCssExtractPlugin({
+        //     filename: "[name]/css.[contenthash].css",
+        //      chunkFilename: "[name]/css.[contenthash].css",
+        //   }),
         // new CompressionPlugin({
         //   algorithm: "gzip",
         //   test: /\.js$|\.css$|\.html$/,

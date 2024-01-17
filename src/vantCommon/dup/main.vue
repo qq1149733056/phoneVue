@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>dup1</h1>
+    <h1>vantdup1</h1>
     <div class="hd">123</div>
   </div>
 </template>
