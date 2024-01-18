@@ -13,7 +13,7 @@ if (data.pages.length > 0) {
   let arr = [];
   data.pages.forEach((val, index) => {
     let pagesPath = path.resolve(__dirname, `src/${val}`);
-    let tempArr = getDirectories(pagesPath,val);
+    let tempArr = getDirectories(pagesPath, val);
     arr.push(...tempArr);
     pages = getDataPageIndex(arr);
   });
@@ -23,8 +23,8 @@ if (data.pages.length > 0) {
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
   ? {
-      filename: "[name]/css.[contenthash].css",
-      chunkFilename: "[name]/css.[contenthash].css",
+      filename: "css/css.[contenthash].css",
+      chunkFilename: "css/css.[contenthash].css",
     }
   : false;
 console.log(pages); //输出路径
@@ -32,7 +32,7 @@ module.exports = defineConfig({
   css: {
     extract: cssExtract,
   },
-  publicPath: process.argv[2].includes("serve") ? "/" : "../../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
+  publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
   pages: pages,
   outputDir: isEnvProduction
     ? `dist/dist_${timestamp}`
@@ -91,14 +91,13 @@ module.exports = defineConfig({
       devtool: config.mode === "production" ? false : "source-map",
       output: {
         filename: (pathData) => {
-          // console.log(pathData)
+          //console.log(pathData)
           if (pathData.chunk.name.includes("vendors")) {
             return "vendors/[name].bundle.js"; // 文件名
           } else {
             let arr = pathData.chunk.name.split("/");
-            return (
-              pathData.chunk.name + "/" + arr[arr.length - 1] + ".bundle.js"
-            ); // 文件名
+            let str = arr.join("_");
+            return `${arr[0]}/${str}.bundle.js`; // 文件名
           }
         },
       },
