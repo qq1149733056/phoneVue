@@ -1,25 +1,24 @@
 const { defineConfig } = require("@vue/cli-service");
-const webpack = require('webpack');
-const CompressionPlugin = require("compression-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin");
-const isEnvProduction = process.env.NODE_ENV === "production";
+const webpack = require("webpack");
+const CompressionPlugin = require("compression-webpack-plugin"); //更具项目需求来选择压缩插件
+const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
+const { getDirectories, getDataPageIndex } = require("./Unit");
+const data = require("./pages.json");
 const path = require("path");
 const date = new Date();
 const timestamp = date.getTime();
-const data = require("./pages.json");
+const isEnvProduction = process.env.NODE_ENV === "production";
 let pages = {};
 if (data.pages.length > 0) {
-} else {
-  data.pagesindex.forEach((val, index) => {
-    let temp = val.split("/");
-    pages[val] = {
-      entry: `src/${val}/main.js`,
-      template: "public/index.html",
-      filename: `${val}/${temp[temp.length - 1]}.html`,
-      title: `${temp[temp.length - 1]}`,
-    };
+  let arr = [];
+  data.pages.forEach((val, index) => {
+    let pagesPath = path.resolve(__dirname, `src/${val}`);
+    let tempArr = getDirectories(pagesPath,val);
+    arr.push(...tempArr);
+    pages = getDataPageIndex(arr);
   });
+} else {
+  pages = getDataPageIndex(data.pagesindex);
 }
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
@@ -30,9 +29,6 @@ cssExtract = cssIF
   : false;
 console.log(pages); //输出路径
 module.exports = defineConfig({
-  // css: {
-  //   extract: process.argv[2].includes("build"), //判断是serve还是build 直接配置true可能导致无法热更新
-  // },
   css: {
     extract: cssExtract,
   },
@@ -134,13 +130,8 @@ module.exports = defineConfig({
       plugins: [
         new webpack.ProvidePlugin({
           // 配置全局模块
-          global: 'lib-flexible/flexible'
+          global: "lib-flexible/flexible",
         }),
-        //  new CustomOutputPlugin(pages),
-        //   new MiniCssExtractPlugin({
-        //     filename: "[name]/css.[contenthash].css",
-        //      chunkFilename: "[name]/css.[contenthash].css",
-        //   }),
         // new CompressionPlugin({
         //   algorithm: "gzip",
         //   test: /\.js$|\.css$|\.html$/,
