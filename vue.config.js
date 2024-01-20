@@ -38,6 +38,12 @@ module.exports = defineConfig({
     ? `dist/dist_${timestamp}`
     : `sit/sit_${timestamp}`,
   devServer: {
+    client: {
+      overlay: {
+        warnings: false, // 在浏览器控制台显示警告
+        errors: true    // 在浏览器控制台显示错误
+      },
+    },
     hot: true,
     open: false,
     port: 8080,
@@ -50,7 +56,7 @@ module.exports = defineConfig({
     },
   },
   transpileDependencies: true,
-  lintOnSave: false,
+  //lintOnSave: true,
   configureWebpack: (config) => {
     return {
       optimization: {

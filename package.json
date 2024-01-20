@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --mode production",
     "build:sit": "vue-cli-service build --mode sit",
     "serve:sit": "vue-cli-service serve --mode sit"
   },
@@ -15,6 +15,7 @@
     "element-plus": "^2.4.1",
     "lib-flexible": "^0.3.2",
     "ts-loader": "^9.5.1",
+    "vant": "^4.8.2",
     "vue": "^3.2.13",
     "vue-loader": "^17.4.2",
     "vue-router": "^4.2.4",
@@ -50,21 +51,6 @@
     "style-loader": "^3.3.3",
     "typescript": "^5.3.3",
     "url-loader": "^4.1.1"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "plugin:prettier/recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
   },
   "browserslist": [
     "> 1%",
