@@ -2,7 +2,7 @@ const { defineConfig } = require("@vue/cli-service");
 const webpack = require("webpack");
 const CompressionPlugin = require("compression-webpack-plugin"); //更具项目需求来选择压缩插件
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
-const { getDirectories, getDataPageIndex } = require("./Unit");
+const { getDirectories, getDataPageIndex } = require("./unit");
 const data = require("./pages.json");
 const path = require("path");
 const date = new Date();
@@ -22,10 +22,7 @@ if (data.pages.length > 0) {
 }
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
-  ? {
-      filename: "css/css.[contenthash].css",
-      chunkFilename: "css/css.[contenthash].css",
-    }
+  ? true
   : false;
 console.log(pages); //输出路径
 module.exports = defineConfig({
@@ -103,7 +100,7 @@ module.exports = defineConfig({
           } else {
             let arr = pathData.chunk.name.split("/");
             let str = arr.join("_");
-            return `${arr[0]}/${str}.bundle.js`; // 文件名
+            return `${arr[0]}/js/${str}.bundle.js`; // 文件名
           }
         },
       },
@@ -137,6 +134,7 @@ module.exports = defineConfig({
           // 配置全局模块
           global: "lib-flexible/flexible",
         }),
+        new CustomOutputPlugin(pages),
         // new CompressionPlugin({
         //   algorithm: "gzip",
         //   test: /\.js$|\.css$|\.html$/,

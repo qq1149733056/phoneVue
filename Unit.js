@@ -28,6 +28,8 @@ function getDataPageIndex(data) {
       template: "public/index.html",
       filename: `${temp[0]}/${str}.html`,
       title: `${temp[temp.length - 1]}`,
+      pathName:temp[0],
+      cssPath:`${str}`,
     };
   });
   return pages;
