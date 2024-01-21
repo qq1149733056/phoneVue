@@ -1,4 +1,4 @@
 {
- "pages":["pages"],
+ "pages":["pages","vantCommon"],
  "pagesindex":["pages/login","pages/index","vantCommon/login","pages/dup"]
 }

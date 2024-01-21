@@ -22,12 +22,14 @@ if (data.pages.length > 0) {
 }
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
-  ? true
-  : false;
+  ?  {
+    filename: 'css/[name].[contenthash].css',
+  }
+  :false;
 console.log(pages); //输出路径
 module.exports = defineConfig({
   css: {
-    extract: cssExtract,
+    extract: true,
   },
   publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
   pages: pages,
