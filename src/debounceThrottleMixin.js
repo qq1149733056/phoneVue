@@ -1,4 +1,4 @@
-// mixin.js
+// mixin.js  需要防抖和节流时使用这个自定义指令
 export default {
   directives:{
     focus:{

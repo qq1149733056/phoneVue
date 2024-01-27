@@ -9,6 +9,7 @@
     "serve:sit": "vue-cli-service serve --mode sit"
   },
   "dependencies": {
+    "archiver": "^6.0.1",
     "axios": "^1.6.3",
     "css-loader": "^4.3.0",
     "dotenv": "^16.3.1",
@@ -50,7 +51,8 @@
     "prettier": "^2.4.1",
     "style-loader": "^3.3.3",
     "typescript": "^5.3.3",
-    "url-loader": "^4.1.1"
+    "url-loader": "^4.1.1",
+    "zip-webpack-plugin": "^4.0.1"
   },
   "browserslist": [
     "> 1%",

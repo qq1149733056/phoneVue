@@ -1,13 +1,16 @@
 const { defineConfig } = require("@vue/cli-service");
 const webpack = require("webpack");
-const CompressionPlugin = require("compression-webpack-plugin"); //更具项目需求来选择压缩插件
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
+const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages来命名
 const { getDirectories, getDataPageIndex } = require("./unit");
 const data = require("./pages.json");
 const path = require("path");
 const date = new Date();
 const timestamp = date.getTime();
 const isEnvProduction = process.env.NODE_ENV === "production";
+const outputPath = isEnvProduction
+  ? `dist/dist_${timestamp}`
+  : `sit/sit_${timestamp}`;
 let pages = {};
 if (data.pages.length > 0) {
   let arr = [];
@@ -15,32 +18,44 @@ if (data.pages.length > 0) {
     let pagesPath = path.resolve(__dirname, `src/${val}`);
     let tempArr = getDirectories(pagesPath, val);
     arr.push(...tempArr);
-    pages = getDataPageIndex(arr);
+    pages = getDataPageIndex(arr, outputPath);
   });
 } else {
-  pages = getDataPageIndex(data.pagesindex);
+  pages = getDataPageIndex(data.pagesindex, outputPath);
 }
+const paths = Object.values(pages).map((page) => ({
+  filename: `${page.pathName}.zip`,
+  path: `${page.outputPath}`,
+}));
+const uniquePaths = Array.from(new Set(paths.map(JSON.stringify))).map(
+  JSON.parse
+);
+console.log(uniquePaths); //输出路径
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
-  ?  {
-    filename: 'css/[name].[contenthash].css',
-  }
-  :false;
+  ? {
+      filename: "css/[name].[contenthash].css",
+    }
+  : false;
 console.log(pages); //输出路径
+let plugins = [];
+if (!process.argv[2].includes("serve")) {
+  plugins.push(new CustomOutputPlugin(pages));
+  plugins.push(new ZipDirectoryPlugin(uniquePaths));
+
+}
 module.exports = defineConfig({
   css: {
     extract: true,
   },
   publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
   pages: pages,
-  outputDir: isEnvProduction
-    ? `dist/dist_${timestamp}`
-    : `sit/sit_${timestamp}`,
+  outputDir: outputPath,
   devServer: {
     client: {
       overlay: {
         warnings: false, // 在浏览器控制台显示警告
-        errors: true    // 在浏览器控制台显示错误
+        errors: true, // 在浏览器控制台显示错误
       },
     },
     hot: true,
@@ -72,14 +87,14 @@ module.exports = defineConfig({
               maxInitialRequests: 30,
               automaticNameDelimiter: "~",
             },
-            common: {
-              test: /[\\/]src[\\/]/,
-              name: "common",
-              chunks: "all",
-              minSize: 0,
-              priority: -20,
-              reuseExistingChunk: true,
-            },
+            // common: {
+            //   test: /[\\/]src[\\/]/,
+            //   name: "common",
+            //   chunks: "all",
+            //   minSize: 0,
+            //   priority: -20,
+            //   reuseExistingChunk: true,
+            // },
           },
         },
       },
@@ -118,7 +133,7 @@ module.exports = defineConfig({
             ],
           },
           {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            test: /\.(png|ico?n|jpe?g|gif|svg)(\?.*)?$/,
             type: "asset",
             parser: {
               dataUrlCondition: {
@@ -136,7 +151,7 @@ module.exports = defineConfig({
           // 配置全局模块
           global: "lib-flexible/flexible",
         }),
-        new CustomOutputPlugin(pages),
+        ...plugins,
         // new CompressionPlugin({
         //   algorithm: "gzip",
         //   test: /\.js$|\.css$|\.html$/,

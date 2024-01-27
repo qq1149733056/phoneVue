@@ -18,12 +18,14 @@ function getDirectories(dirPath, pathName) {
   return directoryNames;
 }
 
-function getDataPageIndex(data) {
+function getDataPageIndex(data,outputPath) {
   let pages = {};
   data.forEach((val, index) => {
     let temp = val.split("/");
     let str = temp.join("_");
+    let pagesPath = path.resolve(__dirname, outputPath);
     pages[val] = {
+      outputPath:`${pagesPath}/${temp[0]}`,
       entry: `src/${val}/main.js`,
       template: "public/index.html",
       filename: `${temp[0]}/${str}.html`,
