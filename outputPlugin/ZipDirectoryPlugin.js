@@ -46,7 +46,8 @@ class ZipDirectoryPlugin {
           });
 
           archive.pipe(output);
-          archive.directory(option.path,'pages');
+          console.log('option.pathName',option)
+          archive.directory(option.path,option.pathName);
           archive.finalize();
         });
       });
@@ -76,7 +77,6 @@ class ZipDirectoryPlugin {
           archive.finalize();
       })
       // 使用 Promise.all 等待所有压缩任务完成
-      //tasks.push(common)
       return Promise.all(tasks);
     });
   }

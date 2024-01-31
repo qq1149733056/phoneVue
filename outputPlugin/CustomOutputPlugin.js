@@ -30,19 +30,24 @@ class CustomOutputPlugin {
                       compilation.assets[filename];
                     const HtmlWebpackPlugin = require("html-webpack-plugin");
                     const hooks = HtmlWebpackPlugin.getHooks(compilation);
-                    // hooks.beforeAssetTagGeneration.tapAsync(
-                    //   'CustomOutputPlugin', // <-- 插件名称
-                    //   (data, cb) => {
-                    //     // 修改 data.assets.js 中的路径
-                    //     data.assets.js = data.assets.js.map(jsPath => {
-                    //       // 替换 '../pages/js/' 为 '../js/'
-                    //       return jsPath.replace('../pages/js/', '../js/');
-                    //     });
-                    //     console.log('data.assets.js',data.assets.js)
-                    //     // 继续处理
-                    //     cb(null, data);
-                    //   }
-                    // );
+                    hooks.beforeAssetTagGeneration.tapAsync(
+                      'CustomOutputPlugin', // <-- 插件名称
+                      (data, cb) => {
+                        // 修改 data.assets.js 中的路径
+                        data.assets.js = data.assets.js.map(jsPath => {
+                          // 替换 '../pages/js/' 为 '../js/'
+                          if(jsPath!==undefined&&jsPath.includes(this.pages[key].pathName)){
+                            return jsPath.replace('../../', '../');
+                          }else{
+                            return jsPath;
+                          }
+                          
+                        });
+                       // console.log('data.assets.js',data.assets.js)
+                        // 继续处理
+                        cb(null, data);
+                      }
+                    );
                     hooks.alterAssetTags.tapAsync(
                       "CustomOutputPlugin",
                       (data, callback) => {

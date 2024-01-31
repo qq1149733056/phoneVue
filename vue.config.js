@@ -26,6 +26,7 @@ if (data.pages.length > 0) {
 const paths = Object.values(pages).map((page) => ({
   filename: `${page.pathName}.zip`,
   path: `${page.outputPath}`,
+  pathName:page.pathName
 }));
 const uniquePaths = Array.from(new Set(paths.map(JSON.stringify))).map(
   JSON.parse
