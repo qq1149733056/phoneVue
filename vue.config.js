@@ -34,21 +34,21 @@ console.log(uniquePaths); //输出路径
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
   ? {
-      filename: "css/[name].[contenthash].css",
+    filename: "2021131/css/[name].[contenthash].css",
     }
   : false;
 console.log(pages); //输出路径
-let plugins = [];
-if (!process.argv[2].includes("serve")) {
+let plugins = []; //区分打包还是运行 只要在打包是才需要启动这两个个插件
+if (!process.argv[2].includes("serve")) { 
   plugins.push(new CustomOutputPlugin(pages));
-  plugins.push(new ZipDirectoryPlugin(uniquePaths));
+  plugins.push(new ZipDirectoryPlugin(uniquePaths,outputPath));
 
 }
 module.exports = defineConfig({
   css: {
-    extract: true,
+    extract: cssExtract,
   },
-  publicPath: process.argv[2].includes("serve") ? "/" : "../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
+  publicPath: process.argv[2].includes("serve") ? "/" : "../../", // 区分是在打包还是在调试,读取正在输入命令[ '/usr/local/bin/node','/path/to/your/project/package.json','run','serve' ]
   pages: pages,
   outputDir: outputPath,
   devServer: {
@@ -113,7 +113,7 @@ module.exports = defineConfig({
         filename: (pathData) => {
           //console.log(pathData)
           if (pathData.chunk.name.includes("vendors")) {
-            return "vendors/[name].bundle.js"; // 文件名
+            return "2021131/vendors/[name].bundle.js"; // 文件名
           } else {
             let arr = pathData.chunk.name.split("/");
             let str = arr.join("_");
