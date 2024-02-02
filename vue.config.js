@@ -1,3 +1,4 @@
+// 打包时只能整个模块打包 注意 特殊需求请更具自己的项目来修改 unit(文件修改) outputPlugin(插件)
 const { defineConfig } = require("@vue/cli-service");
 const webpack = require("webpack");
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
@@ -12,6 +13,7 @@ const outputPath = isEnvProduction
   ? `dist/dist_${timestamp}`
   : `sit/sit_${timestamp}`;
 let pages = {};
+//pages 如果这个数组中有填写目录 会优先处理它
 if (data.pages.length > 0) {
   let arr = [];
   data.pages.forEach((val, index) => {
