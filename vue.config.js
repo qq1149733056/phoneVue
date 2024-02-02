@@ -43,7 +43,7 @@ let plugins = []; //区分打包还是运行 只要在打包是才需要启动�
 if (!process.argv[2].includes("serve")) { 
   plugins.push(new CustomOutputPlugin(pages));
   plugins.push(new ZipDirectoryPlugin(uniquePaths,outputPath));
-
+  
 }
 module.exports = defineConfig({
   css: {
