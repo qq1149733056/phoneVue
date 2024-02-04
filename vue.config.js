@@ -4,6 +4,8 @@ const webpack = require("webpack");
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
 const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages来命名
 const { getDirectories, getDataPageIndex } = require("./unit");
+//更具阿里云mpaas的配置来写入
+const mpaascloudCofig = require("./mpassConfig.json").mpaascloudCofig;
 const data = require("./pages.json");
 const path = require("path");
 const date = new Date();
@@ -28,7 +30,7 @@ if (data.pages.length > 0) {
 const paths = Object.values(pages).map((page) => ({
   filename: `${page.pathName}.zip`,
   path: `${page.outputPath}`,
-  pathName:page.pathName
+  pathName: page.pathName,
 }));
 const uniquePaths = Array.from(new Set(paths.map(JSON.stringify))).map(
   JSON.parse
@@ -37,15 +39,15 @@ console.log(uniquePaths); //输出路径
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
   ? {
-    filename: "2021131/css/[name].[contenthash].css",
+      filename:
+       `${mpaascloudCofig.appid}/${mpaascloudCofig.ip}/${mpaascloudCofig.workid}/[name].[contenthash].css`
     }
   : false;
 console.log(pages); //输出路径
 let plugins = []; //区分打包还是运行 只要在打包是才需要启动这两个个插件
-if (!process.argv[2].includes("serve")) { 
+if (!process.argv[2].includes("serve")) {
   plugins.push(new CustomOutputPlugin(pages));
-  plugins.push(new ZipDirectoryPlugin(uniquePaths,outputPath));
-  
+  plugins.push(new ZipDirectoryPlugin(uniquePaths, outputPath));
 }
 module.exports = defineConfig({
   css: {
@@ -116,7 +118,7 @@ module.exports = defineConfig({
         filename: (pathData) => {
           //console.log(pathData)
           if (pathData.chunk.name.includes("vendors")) {
-            return "2021131/vendors/[name].bundle.js"; // 文件名
+            return `${mpaascloudCofig.appid}/${mpaascloudCofig.ip}/${mpaascloudCofig.workid}/[contenthash].js`;
           } else {
             let arr = pathData.chunk.name.split("/");
             let str = arr.join("_");

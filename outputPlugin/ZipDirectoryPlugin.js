@@ -7,7 +7,7 @@ class ZipDirectoryPlugin {
     this.outputPath = outputPath;
     this.options = options;
   }
-  zipFile = (resolve, reject, outputPath, path, pathName = false) => {
+  zipFile = (zip,resolve, reject, outputPath, path, pathName = false) => {
     // 删除已经存在的压缩文件
     if (fs.existsSync(outputPath)) {
       fs.unlinkSync(outputPath);
@@ -39,9 +39,8 @@ class ZipDirectoryPlugin {
     archive.on("error", function (err) {
       reject(err);
     });
-
     archive.pipe(output);
-    archive.directory(path, pathName);
+    archive.directory(path, `${zip}/${pathName}`);
     archive.finalize();
   };
   apply(compiler) {
@@ -61,6 +60,7 @@ class ZipDirectoryPlugin {
           }
           const outputPath = path.join(option.path, "..", option.filename);
           this.zipFile(
+            option.filename.split(".")[0],
             resolve,
             reject,
             outputPath,
@@ -68,15 +68,15 @@ class ZipDirectoryPlugin {
             option.pathName
           );
         });
-      });
-      let common = new Promise((resolve, reject) => {
-        let pagesPath = path.join(
-          this.outputPath + "/2021131",
-          "..",
-          "2021131.zip"
-        );
-        this.zipFile(resolve, reject, pagesPath, this.outputPath + "/2021131");//这是一个公共的资源文件包 css和node-modlues
-      });
+      }); 
+      // let common = new Promise((resolve, reject) => {
+      //   let pagesPath = path.join(
+      //     this.outputPath + "/20241211/mcube-prod.mpaascloud.com/ALIPUB944A43E211215_default",
+      //     "..",
+      //     "20241211.zip"
+      //   );
+      //   this.zipFile('20241211',resolve, reject, pagesPath, this.outputPath + "/2021131");//这是一个公共的资源文件包 css和node-modlues
+      // });
 
     });
   }
