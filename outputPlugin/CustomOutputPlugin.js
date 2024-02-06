@@ -3,10 +3,6 @@ class CustomOutputPlugin {
   constructor(pages) {
     this.pages = pages;
   }
-  modifyJsPath(jsPath) {
-    // 在这里修改 jsPath
-    return "/prefix/" + jsPath;
-  }
   apply(compiler) {
     compiler.hooks.compilation.tap("CustomOutputPlugin", (compilation) => {
       compilation.hooks.additionalAssets.tapAsync(
@@ -48,7 +44,7 @@ class CustomOutputPlugin {
                   jsPath !== undefined &&
                   jsPath.includes(mpaascloudCofig.appid)
                 ) {
-                  console.log("jsPath", jsPath);
+                  //console.log("jsPath", jsPath);
                   return jsPath.replace(
                     `../../${mpaascloudCofig.appid}/`,
                     "https://"
