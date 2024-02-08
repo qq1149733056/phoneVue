@@ -13,4 +13,13 @@
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+  <script>
+    function ready(callback) {
+  if (window.AlipayJSBridge) {
+    callback && callback();
+  } else {
+    document.addEventListener('AlipayJSBridgeReady', callback, false);
+  }
+}
+  </script>
 </html>

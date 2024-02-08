@@ -4,6 +4,7 @@ const webpack = require("webpack");
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
 const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages来命名
 const { getDirectories, getDataPageIndex } = require("./unit");
+const VConsolePlugin = require('vconsole-webpack-plugin');
 //更具阿里云mpaas的配置来写入
 const mpaascloudCofig = require("./mpassConfig.json").mpaascloudCofig;
 const data = require("./pages.json");
@@ -66,7 +67,7 @@ module.exports = defineConfig({
     hot: true,
     open: false,
     port: 8080,
-    host: "localhost",
+    host: "192.168.31.138",
   },
   pluginOptions: {
     electronBuilder: {
@@ -128,15 +129,15 @@ module.exports = defineConfig({
       },
       module: {
         rules: [
-          {
-            test: /\.less$/i,
-            use: [
-              "vue-style-loader",
-              "css-loader",
-              "postcss-loader",
-              "less-loader",
-            ],
-          },
+          // {
+          //   test: /\.less$/i,
+          //   use: [
+          //     // "vue-style-loader",
+          //     // "css-loader",
+          //     // "postcss-loader",
+          //     // "less-loader",
+          //   ],
+          // },
           {
             test: /\.(png|ico?n|jpe?g|gif|svg)(\?.*)?$/,
             type: "asset",
@@ -155,6 +156,9 @@ module.exports = defineConfig({
         new webpack.ProvidePlugin({
           // 配置全局模块
           global: "lib-flexible/flexible",
+        }),
+        new VConsolePlugin({
+          enable: process.env.NODE_ENV !== 'production'
         }),
         ...plugins,
         // new CompressionPlugin({

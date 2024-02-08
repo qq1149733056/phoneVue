@@ -1,0 +1,54 @@
+
+
+.hread {
+  img{
+    height: 120px;
+ }
+ .demo{
+  color: red;
+ }
+  .my-swipe .van-swipe-item {
+    text-align: center;
+    background-color: white;
+  }
+}
+.grid{
+    margin-top: 20px;
+}
+.new_arrival{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0;
+    color: #1baeae;
+    .good-box {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        .good-item {
+          box-sizing: border-box;
+          width: 50%;
+          border-bottom: 1PX solid #e9e9e9;
+          padding: 10px 10px;
+          img {
+            display: block;
+            //width: 120px;
+            height: 120px;
+            margin: 0 auto;
+          }
+          .good-desc {
+            text-align: center;
+            font-size: 14px;
+            padding: 10px 0;
+            .title {
+              color: #222333;
+            }
+            .price {
+              //color: @primary;
+            }
+          }
+          &:nth-child(2n + 1) {
+            border-right: 1PX solid #e9e9e9;
+          }
+        }
+      }
+}

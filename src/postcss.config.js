@@ -8,4 +8,4 @@ module.exports = {
         minPixelValue: 2 // 小于2px不进行转换
       }
     }
-  }
+  } 
