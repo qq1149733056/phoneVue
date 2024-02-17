@@ -16,3 +16,6 @@ npm run build:sit
 pages.json 文件中pages是打包时填写的模块 对应阿里mpass中的H5离线包(在zip.json中自行填写包名)  
 pages.json 文件中pages也可以作为运行调试的模块,注意pages优先级高于pagesindex  
 pages.json 文件中的pagesindex是运行多个模块多页面时调试  
+
+### 项目资源引用
+https://github.com/newbee-ltd/newbee-mall-vue3-app
