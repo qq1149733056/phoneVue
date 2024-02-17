@@ -20,4 +20,7 @@ export default {
     [SkeletonParagraph.name]: SkeletonParagraph,
     // 其他你需要的 Vant 组件
   },
+  mounted(){
+    document.title = "首页";
+  }
 };

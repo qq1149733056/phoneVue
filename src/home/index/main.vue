@@ -71,20 +71,18 @@
   </div>
 </template>
 <script setup>
-import { reactive, onMounted } from "vue";
+
+import { reactive } from "vue";
 //图片引用资源为newbee-mall-vue3-app
-const goToDetail = (item) => {
+let goToDetail = (item) => {
   AlipayJSBridge.call("pushWindow", {
-    url: "/home/home_about.html", // 要打开页面的 URL
+  url: "/home/home_about.html", // 要打开页面的 URL
     // 打开页面的配置参数
     param: {
       readTitle: true, //自动读取 title
       showOptionMenu: false, // 隐藏右边菜单
       val:item,
     },
-    // passData: {
-    //   val:item,
-    // },
   });
 };
 const state = new reactive({
@@ -182,7 +180,7 @@ const state = new reactive({
     },
   ],
 });
-onMounted(async () => {});
+
 </script>
 
 <style lang="less" scoped>

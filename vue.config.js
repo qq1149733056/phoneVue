@@ -66,8 +66,9 @@ module.exports = defineConfig({
     },
     hot: true,
     open: false,
-    port: 8080,
-    host: "192.168.31.138",
+    host: '0.0.0.0',
+    port: 8080, // 可选，如果你想改变端口
+    //disableHostCheck: true, // 可选，如果你想禁用主机检查
   },
   pluginOptions: {
     electronBuilder: {

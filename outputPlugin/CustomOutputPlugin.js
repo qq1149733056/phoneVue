@@ -69,7 +69,7 @@ class CustomOutputPlugin {
                     let newFilename = `${this.pages[key].pathName}/css/${cssStr}`;
                     tag.attributes.href = "../" + newFilename;
                   }
-                  if (tag.attributes.href.includes("chunk-vendors")) {
+                  if (tag.attributes.href.includes("vendors~node_modules")) {
                     tag.attributes.href = tag.attributes.href.replace(
                       `../../${mpaascloudCofig.appid}/`,
                       "https://"
