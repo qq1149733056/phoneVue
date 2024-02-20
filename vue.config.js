@@ -4,7 +4,9 @@ const webpack = require("webpack");
 const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
 const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages来命名
 const { getDirectories, getDataPageIndex } = require("./unit");
-const VConsolePlugin = require('vconsole-webpack-plugin');
+const VConsolePlugin = require("vconsole-webpack-plugin");
+const { VantResolver } = require("@vant/auto-import-resolver");
+const ComponentsPlugin = require("unplugin-vue-components/webpack");
 //更具阿里云mpaas的配置来写入
 const mpaascloudCofig = require("./mpassConfig.json").mpaascloudCofig;
 const data = require("./pages.json");
@@ -40,8 +42,7 @@ console.log(uniquePaths); //输出路径
 let cssIF = process.argv[2].includes("build");
 cssExtract = cssIF
   ? {
-      filename:
-       `${mpaascloudCofig.appid}/${mpaascloudCofig.ip}/${mpaascloudCofig.workid}/[name].[contenthash].css`
+      filename: `${mpaascloudCofig.appid}/${mpaascloudCofig.ip}/${mpaascloudCofig.workid}/[name].[contenthash].css`,
     }
   : false;
 console.log(pages); //输出路径
@@ -66,7 +67,7 @@ module.exports = defineConfig({
     },
     hot: true,
     open: false,
-    host: '0.0.0.0',
+    host: "0.0.0.0",
     port: 8080, // 可选，如果你想改变端口
     //disableHostCheck: true, // 可选，如果你想禁用主机检查
   },
@@ -159,9 +160,13 @@ module.exports = defineConfig({
           global: "lib-flexible/flexible",
         }),
         new VConsolePlugin({
-          enable: process.env.NODE_ENV !== 'production'
+          enable: process.env.NODE_ENV !== "production",
         }),
         ...plugins,
+        // 当 unplugin-vue-components 版本小于 0.26.0 时，使用以下写法
+        //ComponentsPlugin({ resolvers: [VantResolver()] }),
+        //当 unplugin-vue-components 版本大于等于 0.26.0 时，使用以下写法
+        ComponentsPlugin.default({ resolvers: [VantResolver()] }),
         // new CompressionPlugin({
         //   algorithm: "gzip",
         //   test: /\.js$|\.css$|\.html$/,

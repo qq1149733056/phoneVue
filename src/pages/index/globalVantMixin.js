@@ -1,8 +1,6 @@
 // mixin.js
 import { Sidebar, SidebarItem ,ConfigProvider,Grid, GridItem } from 'vant';
-import 'vant/lib/index.css';
 export default {
-  
   components: {
     [Sidebar.name]: Sidebar,
     [SidebarItem.name]: SidebarItem,

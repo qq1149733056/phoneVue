@@ -56,6 +56,42 @@ let state = new reactive({
     {
       name: "运动",
     },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "运动",
+    },
+    {
+      name: "家电",
+    },
+    {
+      name: "家电",
+    },
+    {
+      name: "家电",
+    },
+    {
+      name: "家电",
+    },
   ],
 });
 let onChange = (index) => {

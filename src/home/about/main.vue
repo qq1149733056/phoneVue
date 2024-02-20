@@ -6,9 +6,7 @@
     <div class="about_mian">
       <div>
         <div class="title">{{ state.item.goodsName }}</div>
-        <div class="sub_title">
-          免邮费 顺丰快递
-        </div>
+        <div class="sub_title">免邮费 顺丰快递</div>
         <div class="money">
           {{ state.item.sellingPrice }}
         </div>
@@ -19,28 +17,25 @@
           <li>常见问题</li>
         </ul>
         <div class="prouduct">
-          <img src="https://newbee-mall.oss-cn-beijing.aliyuncs.com/images/mate-50-pro-1.jpg" >
+          <img
+            src="https://newbee-mall.oss-cn-beijing.aliyuncs.com/images/mate-50-pro-1.jpg"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
-import { reactive} from "vue";
+import { reactive } from "vue";
 const state = new reactive({
-  item:{},
-
+  item: {},
 });
-
-  AlipayJSBridge.call(
-  "getStartupParams",
-   (result)=>{
+ready(()=>{
+  AlipayJSBridge.call("getStartupParams", (result) => {
     state.item = JSON.parse(result.val);
-    console.log(state.item)
-  }
-);
-
+  });
+});
 </script>
-<style lang="less"  scoped>
+<style lang="less" scoped>
 @import "./main.less";
 </style>

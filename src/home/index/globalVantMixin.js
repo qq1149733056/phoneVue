@@ -1,11 +1,16 @@
 // mixin.js
-import { Button ,Swipe, SwipeItem , Grid, GridItem,
+import {
+  Button,
+  Swipe,
+  SwipeItem,
+  Grid,
+  GridItem,
   Skeleton,
   SkeletonTitle,
   SkeletonImage,
   SkeletonAvatar,
-  SkeletonParagraph,} from 'vant';
-import 'vant/lib/index.css';
+  SkeletonParagraph,
+} from "vant";
 export default {
   components: {
     [Button.name]: Button,
@@ -20,7 +25,7 @@ export default {
     [SkeletonParagraph.name]: SkeletonParagraph,
     // 其他你需要的 Vant 组件
   },
-  mounted(){
+  mounted() {
     document.title = "首页";
-  }
+  },
 };

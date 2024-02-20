@@ -30,6 +30,7 @@
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
     "@babel/preset-env": "^7.23.7",
+    "@vant/auto-import-resolver": "^1.0.2",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
@@ -52,6 +53,7 @@
     "prettier": "^2.4.1",
     "style-loader": "^3.3.3",
     "typescript": "^5.3.3",
+    "unplugin-vue-components": "^0.26.0",
     "url-loader": "^4.1.1",
     "vconsole-webpack-plugin": "^1.8.0",
     "zip-webpack-plugin": "^4.0.1"
