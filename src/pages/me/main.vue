@@ -28,7 +28,7 @@ let state = reactive({
 })
 let getDataN = () => {
   var params = [{id:'101030100'}];
-  //var operationType = process.env.NODE_ENV;
+  var operationType = process.env.VUE_APP_MPASS;
 
   AlipayJSBridge.call(
     "rpc",
