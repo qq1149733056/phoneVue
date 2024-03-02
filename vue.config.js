@@ -1,11 +1,11 @@
 // 打包时只能整个模块打包 注意 特殊需求请更具自己的项目来修改 unit(文件修改) outputPlugin(插件)
 const { defineConfig } = require("@vue/cli-service");
-const webpack = require("webpack");
-const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //预留自定义组件
-const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages来命名
-const { getDirectories, getDataPageIndex } = require("./unit");
-const VConsolePlugin = require("vconsole-webpack-plugin");
 const { VantResolver } = require("@vant/auto-import-resolver");
+const { getDirectories, getDataPageIndex } = require("./unit");
+const webpack = require("webpack");
+const CustomOutputPlugin = require("./outputPlugin/CustomOutputPlugin"); //修改文件路径插件
+const ZipDirectoryPlugin = require("./outputPlugin/ZipDirectoryPlugin"); //压缩目录 更具pages和zip来命名
+const VConsolePlugin = require("vconsole-webpack-plugin");
 const ComponentsPlugin = require("unplugin-vue-components/webpack");
 //更具阿里云mpaas的配置来写入
 const mpaascloudCofig = require("./mpassConfig.json").mpaascloudCofig;
@@ -167,12 +167,6 @@ module.exports = defineConfig({
         //ComponentsPlugin({ resolvers: [VantResolver()] }),
         //当 unplugin-vue-components 版本大于等于 0.26.0 时，使用以下写法
         ComponentsPlugin.default({ resolvers: [VantResolver()] }),
-        // new CompressionPlugin({
-        //   algorithm: "gzip",
-        //   test: /\.js$|\.css$|\.html$/,
-        //   threshold: 10240,
-        //   minRatio: 0.8,
-        // }),
       ],
     };
   },

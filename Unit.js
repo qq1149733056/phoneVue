@@ -1,6 +1,6 @@
 const path = require("path");
 const fs = require("fs");
-
+//命名目录
 function getDirectories(dirPath, pathName) {
     let entries = fs.readdirSync(dirPath, { withFileTypes: true });
 
@@ -17,7 +17,7 @@ function getDirectories(dirPath, pathName) {
 
   return directoryNames;
 }
-
+//启动页面
 function getDataPageIndex(data,outputPath) {
   let pages = {};
   data.forEach((val, index) => {

@@ -11,14 +11,38 @@
       </div>
     </div>
     <div class="desc_cell">
-      <van-cell title="我的订单" is-link />
+      <van-cell @click="getDataN" title="我的订单" is-link />
       <van-cell title="账号管理" is-link />
       <van-cell title="地址管理" is-link />
       <van-cell title="关于我们" is-link />
+      <div>
+        网络请求测试: {{ state.data.ganmao }}
+      </div>
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import {reactive} from "vue";
+let state = reactive({
+  data:{},
+})
+let getDataN = () => {
+  var params = [{id:'101030100'}];
+  //var operationType = process.env.NODE_ENV;
+
+  AlipayJSBridge.call(
+    "rpc",
+    {
+      operationType: operationType,
+      requestData: params,
+    },
+     (result)=>{
+      console.log(result);
+      state.data = result.data;
+    }
+  );
+};
+</script>
 <style lang="less" scoped>
 @import "./main.less";
 </style>

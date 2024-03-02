@@ -19,6 +19,7 @@
     <div class="grid">
       <van-grid :column-num="5">
         <van-grid-item
+         @click="goToIndex(val)"
           :key="val.categoryId"
           v-for="val in state.categoryList"
           :icon="val.imgUrl"
@@ -49,12 +50,12 @@
     </div>
     <div class="new_arrival">
       <div>
-        <h2>热门商品</h2>
+        <h2 v-debounce="()=>showMessage('热门商品')">热门商品</h2>
       </div>
       <van-skeleton title :row="3" :loading="state.loading">
-        <div class="good-box">
+        <div class="good-box"> 
           <div
-            class="good-item"
+            class="good-item" 
             v-for="(item, index) in state.newGoodses"
             :key="index"
             @click="goToDetail(item)"
@@ -72,8 +73,38 @@
 </template>
 <script setup>
 
-import { reactive } from "vue";
+import { reactive} from "vue";
+
+const showMessage = (item) => {
+  console.log('Start')
+
+let promise = new Promise((resolve) => {
+  setTimeout(() => {
+      console.log('setTimeout')
+    }, 0)
+  resolve()
+  console.log('Promise')
+})
+
+promise.then(() => {
+  console.log('Promise then111111111111111')
+})
+
+console.log('End');
+console.log(item)
+}
 //图片引用资源为newbee-mall-vue3-app
+let goToIndex = (item)=>{
+  AlipayJSBridge.call("pushWindow", {
+  url: "/home/home_demo.html", // 要打开页面的 URL
+    // 打开页面的配置参数
+    param: {
+      readTitle: true, //自动读取 title
+      showOptionMenu: false, // 隐藏右边菜单
+      val:item,
+    },
+  });
+};
 let goToDetail = (item) => {
   AlipayJSBridge.call("pushWindow", {
   url: "/home/home_about.html", // 要打开页面的 URL
