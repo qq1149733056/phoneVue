@@ -74,6 +74,7 @@
 <script setup>
 
 import { reactive} from "vue";
+import { navigateTo } from "@/utils/navigation";
 
 const showMessage = (item) => {
   console.log('Start')
@@ -95,25 +96,13 @@ console.log(item)
 }
 //图片引用资源为newbee-mall-vue3-app
 let goToIndex = (item)=>{
-  AlipayJSBridge.call("pushWindow", {
-  url: "/home/home_demo.html", // 要打开页面的 URL
-    // 打开页面的配置参数
-    param: {
-      readTitle: true, //自动读取 title
-      showOptionMenu: false, // 隐藏右边菜单
-      val:item,
-    },
+  navigateTo("/home/home_demo.html", {
+    val: item
   });
 };
 let goToDetail = (item) => {
-  AlipayJSBridge.call("pushWindow", {
-  url: "/home/home_about.html", // 要打开页面的 URL
-    // 打开页面的配置参数
-    param: {
-      readTitle: true, //自动读取 title
-      showOptionMenu: false, // 隐藏右边菜单
-      val:item,
-    },
+  navigateTo("/home/home_about.html", {
+    val: item
   });
 };
 const state = new reactive({

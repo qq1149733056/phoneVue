@@ -1,10 +1,7 @@
 // mixin.js
-import { Button, List } from 'vant';
+// 组件已通过 unplugin-vue-components 自动按需引入，无需手动注册
 export default {
   components: {
-    [Button.name]: Button,
-    [List.name]: List,
-    // 其他你需要的 Vant 组件
   },
   mounted(){
     document.title = "演示";
