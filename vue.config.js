@@ -52,6 +52,7 @@ if (!process.argv[2].includes("serve")) {
   plugins.push(new ZipDirectoryPlugin(uniquePaths, outputPath));
 }
 module.exports = defineConfig({
+  lintOnSave: false,
   css: {
     extract: cssExtract,
   },

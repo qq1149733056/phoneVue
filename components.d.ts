@@ -7,16 +7,16 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    VanCell: typeof import('vant/es')['Cell']
-    VanConfigProvider: typeof import('vant/es')['ConfigProvider']
+    VanButton: typeof import('vant/es')['Button']
+    VanField: typeof import('vant/es')['Field']
     VanGrid: typeof import('vant/es')['Grid']
     VanGridItem: typeof import('vant/es')['GridItem']
-    VanSidebar: typeof import('vant/es')['Sidebar']
-    VanSidebarItem: typeof import('vant/es')['SidebarItem']
+    VanLoading: typeof import('vant/es')['Loading']
+    VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanSkeleton: typeof import('vant/es')['Skeleton']
     VanSwipe: typeof import('vant/es')['Swipe']
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
+    VanTab: typeof import('vant/es')['Tab']
+    VanTabs: typeof import('vant/es')['Tabs']
   }
 }
